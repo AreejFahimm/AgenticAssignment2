@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "connects_cost_per_proposal": 8,
+  "premium_budget_threshold": 1000000000,
+  "premium_job_extra_connects": 0,
+  "min_cover_letter_chars": 0,
+  "max_proposals_per_day": 50
+}
