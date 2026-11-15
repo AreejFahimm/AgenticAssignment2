@@ -1,0 +1,12 @@
+{
+  "drafts": 50,
+  "fabricated_planted": 100,
+  "fabricated_removed": 100,
+  "fabrication_recall": 1.0,
+  "true_claims_checked": 101,
+  "true_claims_wrongly_removed": 0,
+  "false_positive_rate": 0.0,
+  "unsupported_rate_before": 0.5998,
+  "unsupported_rate_after": 0.0,
+  "method": "planted synthetic fabrications into extractive drafts (offline writer cannot fabricate)"
+}

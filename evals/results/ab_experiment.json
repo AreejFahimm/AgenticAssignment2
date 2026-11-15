@@ -1,0 +1,36 @@
+{
+  "n_pairs": 40,
+  "reply_rate_A_evidence_first": 0.4,
+  "reply_rate_B_concise_question": 0.425,
+  "diff_A_minus_B": -0.025,
+  "bootstrap_95ci": [
+    -0.25,
+    0.2
+  ],
+  "discordant": {
+    "A_only": 11,
+    "B_only": 12
+  },
+  "mcnemar_exact_p": 1.0,
+  "two_proportion_z": -0.227,
+  "two_proportion_p": 0.82034,
+  "significant_at_0_05": false,
+  "by_persona": {
+    "ai_ml_engineer": {
+      "n": 15,
+      "A": 6,
+      "B": 9
+    },
+    "fullstack_web_dev": {
+      "n": 17,
+      "A": 7,
+      "B": 5
+    },
+    "data_analyst": {
+      "n": 8,
+      "A": 3,
+      "B": 3
+    }
+  },
+  "caveat": "GigSim-local clients are rule-based; this tests the experiment machinery and simulator preferences, not real clients"
+}

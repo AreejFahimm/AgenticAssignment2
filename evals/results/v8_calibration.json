@@ -1,0 +1,22 @@
+{
+  "threshold": 0.66,
+  "dev": {
+    "f1": 0.523,
+    "precision": 0.378,
+    "recall": 0.846
+  },
+  "heldout": {
+    "f1": 0.524,
+    "precision": 0.391,
+    "recall": 0.794
+  },
+  "n_dev": 568,
+  "n_heldout": 140,
+  "empty_gold_dev": 130,
+  "empty_gold_heldout": 34,
+  "default_threshold_0_50": {
+    "f1": 0,
+    "precision": 0,
+    "recall": 0.0
+  }
+}

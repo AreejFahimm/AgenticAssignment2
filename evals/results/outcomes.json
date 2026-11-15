@@ -1,0 +1,121 @@
+{
+  "arms": [
+    {
+      "variant": "generic",
+      "submitted": 75,
+      "reply_rate": 0.0133,
+      "interview_rate": 0.0,
+      "hire_rate": 0.0,
+      "connects_spent": 600,
+      "p95_latency_s": 0.523,
+      "by_persona": {
+        "ai_ml_engineer": {
+          "submitted": 25,
+          "reply_rate": 0.04
+        },
+        "fullstack_web_dev": {
+          "submitted": 25,
+          "reply_rate": 0.0
+        },
+        "data_analyst": {
+          "submitted": 25,
+          "reply_rate": 0.0
+        }
+      }
+    },
+    {
+      "variant": "v0",
+      "submitted": 36,
+      "reply_rate": 0.2778,
+      "interview_rate": 0.1667,
+      "hire_rate": 0.0556,
+      "connects_spent": 288,
+      "p95_latency_s": 3.732,
+      "by_persona": {
+        "ai_ml_engineer": {
+          "submitted": 12,
+          "reply_rate": 0.4167
+        },
+        "fullstack_web_dev": {
+          "submitted": 16,
+          "reply_rate": 0.1875
+        },
+        "data_analyst": {
+          "submitted": 8,
+          "reply_rate": 0.25
+        }
+      }
+    },
+    {
+      "variant": "v2",
+      "submitted": 31,
+      "reply_rate": 0.3548,
+      "interview_rate": 0.0968,
+      "hire_rate": 0.0,
+      "connects_spent": 248,
+      "p95_latency_s": 0.861,
+      "by_persona": {
+        "ai_ml_engineer": {
+          "submitted": 9,
+          "reply_rate": 0.3333
+        },
+        "fullstack_web_dev": {
+          "submitted": 14,
+          "reply_rate": 0.4286
+        },
+        "data_analyst": {
+          "submitted": 8,
+          "reply_rate": 0.25
+        }
+      }
+    },
+    {
+      "variant": "best",
+      "submitted": 35,
+      "reply_rate": 0.4571,
+      "interview_rate": 0.0571,
+      "hire_rate": 0.0286,
+      "connects_spent": 280,
+      "p95_latency_s": 4.54,
+      "by_persona": {
+        "ai_ml_engineer": {
+          "submitted": 11,
+          "reply_rate": 0.7273
+        },
+        "fullstack_web_dev": {
+          "submitted": 16,
+          "reply_rate": 0.4375
+        },
+        "data_analyst": {
+          "submitted": 8,
+          "reply_rate": 0.125
+        }
+      }
+    },
+    {
+      "variant": "ship",
+      "submitted": 40,
+      "reply_rate": 0.375,
+      "interview_rate": 0.125,
+      "hire_rate": 0.025,
+      "connects_spent": 320,
+      "p95_latency_s": 0.418,
+      "by_persona": {
+        "ai_ml_engineer": {
+          "submitted": 15,
+          "reply_rate": 0.4
+        },
+        "fullstack_web_dev": {
+          "submitted": 17,
+          "reply_rate": 0.2941
+        },
+        "data_analyst": {
+          "submitted": 8,
+          "reply_rate": 0.5
+        }
+      }
+    }
+  ],
+  "per_persona_target": 25,
+  "note": "simulated human approval (eval only); GigSim-local clients are rule-based"
+}

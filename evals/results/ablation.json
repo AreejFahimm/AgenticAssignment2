@@ -1,0 +1,580 @@
+{
+  "rows": [
+    {
+      "arm": "V0 baseline",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.3568,
+      "mrr": 0.5268,
+      "ndcg10": 0.4132
+    },
+    {
+      "arm": "V0 baseline",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.3404,
+      "mrr": 0.5355,
+      "ndcg10": 0.4056
+    },
+    {
+      "arm": "V0 baseline",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.1967,
+      "mrr": 0.3559,
+      "ndcg10": 0.2259
+    },
+    {
+      "arm": "V0 baseline",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.3104,
+      "mrr": 0.4861,
+      "ndcg10": 0.3608
+    },
+    {
+      "arm": "V0 baseline",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.5637,
+      "mrr": 0.7181,
+      "ndcg10": 0.6421
+    },
+    {
+      "arm": "V0 baseline",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.4236,
+      "mrr": 0.5851,
+      "ndcg10": 0.4884
+    },
+    {
+      "arm": "best (decompose+hybrid+rerank)",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.3588,
+      "mrr": 0.4853,
+      "ndcg10": 0.4076
+    },
+    {
+      "arm": "best (decompose+hybrid+rerank)",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.3961,
+      "mrr": 0.5697,
+      "ndcg10": 0.4631
+    },
+    {
+      "arm": "best (decompose+hybrid+rerank)",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.2,
+      "mrr": 0.3287,
+      "ndcg10": 0.2433
+    },
+    {
+      "arm": "best (decompose+hybrid+rerank)",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.3399,
+      "mrr": 0.45,
+      "ndcg10": 0.3822
+    },
+    {
+      "arm": "best (decompose+hybrid+rerank)",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.5039,
+      "mrr": 0.5753,
+      "ndcg10": 0.5389
+    },
+    {
+      "arm": "best (decompose+hybrid+rerank)",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.3859,
+      "mrr": 0.536,
+      "ndcg10": 0.4441
+    },
+    {
+      "arm": "best + contextual indexing (V6)",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.3766,
+      "mrr": 0.5021,
+      "ndcg10": 0.4469
+    },
+    {
+      "arm": "best + contextual indexing (V6)",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.3904,
+      "mrr": 0.5628,
+      "ndcg10": 0.4817
+    },
+    {
+      "arm": "best + contextual indexing (V6)",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.245,
+      "mrr": 0.3792,
+      "ndcg10": 0.3044
+    },
+    {
+      "arm": "best + contextual indexing (V6)",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.3768,
+      "mrr": 0.4866,
+      "ndcg10": 0.4389
+    },
+    {
+      "arm": "best + contextual indexing (V6)",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.5162,
+      "mrr": 0.579,
+      "ndcg10": 0.5758
+    },
+    {
+      "arm": "best + contextual indexing (V6)",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.3764,
+      "mrr": 0.5245,
+      "ndcg10": 0.4584
+    },
+    {
+      "arm": "best + outcome boost",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.356,
+      "mrr": 0.4729,
+      "ndcg10": 0.397
+    },
+    {
+      "arm": "best + outcome boost",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.3908,
+      "mrr": 0.5307,
+      "ndcg10": 0.4402
+    },
+    {
+      "arm": "best + outcome boost",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.2,
+      "mrr": 0.3338,
+      "ndcg10": 0.2379
+    },
+    {
+      "arm": "best + outcome boost",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.3331,
+      "mrr": 0.4322,
+      "ndcg10": 0.3688
+    },
+    {
+      "arm": "best + outcome boost",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.5005,
+      "mrr": 0.5721,
+      "ndcg10": 0.536
+    },
+    {
+      "arm": "best + outcome boost",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.3888,
+      "mrr": 0.5313,
+      "ndcg10": 0.4375
+    },
+    {
+      "arm": "best - decompose",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.3305,
+      "mrr": 0.438,
+      "ndcg10": 0.3777
+    },
+    {
+      "arm": "best - decompose",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.3724,
+      "mrr": 0.4721,
+      "ndcg10": 0.4162
+    },
+    {
+      "arm": "best - decompose",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.1767,
+      "mrr": 0.3101,
+      "ndcg10": 0.2247
+    },
+    {
+      "arm": "best - decompose",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.3066,
+      "mrr": 0.4121,
+      "ndcg10": 0.3537
+    },
+    {
+      "arm": "best - decompose",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.4647,
+      "mrr": 0.5502,
+      "ndcg10": 0.5147
+    },
+    {
+      "arm": "best - decompose",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.3649,
+      "mrr": 0.4751,
+      "ndcg10": 0.4122
+    },
+    {
+      "arm": "best - hybrid",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.3457,
+      "mrr": 0.4857,
+      "ndcg10": 0.3934
+    },
+    {
+      "arm": "best - hybrid",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.3325,
+      "mrr": 0.506,
+      "ndcg10": 0.3713
+    },
+    {
+      "arm": "best - hybrid",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.225,
+      "mrr": 0.375,
+      "ndcg10": 0.2608
+    },
+    {
+      "arm": "best - hybrid",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.3245,
+      "mrr": 0.4346,
+      "ndcg10": 0.3623
+    },
+    {
+      "arm": "best - hybrid",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.5025,
+      "mrr": 0.5933,
+      "ndcg10": 0.5742
+    },
+    {
+      "arm": "best - hybrid",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.3761,
+      "mrr": 0.559,
+      "ndcg10": 0.4381
+    },
+    {
+      "arm": "best - rerank",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.414,
+      "mrr": 0.6003,
+      "ndcg10": 0.4652
+    },
+    {
+      "arm": "best - rerank",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.4649,
+      "mrr": 0.533,
+      "ndcg10": 0.4561
+    },
+    {
+      "arm": "best - rerank",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.2517,
+      "mrr": 0.5147,
+      "ndcg10": 0.3145
+    },
+    {
+      "arm": "best - rerank",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.3952,
+      "mrr": 0.5953,
+      "ndcg10": 0.4411
+    },
+    {
+      "arm": "best - rerank",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.548,
+      "mrr": 0.7763,
+      "ndcg10": 0.6526
+    },
+    {
+      "arm": "best - rerank",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.4409,
+      "mrr": 0.6075,
+      "ndcg10": 0.4997
+    },
+    {
+      "arm": "best, rerank pool 10 (latency opt.)",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.3832,
+      "mrr": 0.5163,
+      "ndcg10": 0.4541
+    },
+    {
+      "arm": "best, rerank pool 10 (latency opt.)",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.4373,
+      "mrr": 0.5805,
+      "ndcg10": 0.4987
+    },
+    {
+      "arm": "best, rerank pool 10 (latency opt.)",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.1983,
+      "mrr": 0.3487,
+      "ndcg10": 0.2769
+    },
+    {
+      "arm": "best, rerank pool 10 (latency opt.)",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.3649,
+      "mrr": 0.4823,
+      "ndcg10": 0.4287
+    },
+    {
+      "arm": "best, rerank pool 10 (latency opt.)",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.5402,
+      "mrr": 0.6417,
+      "ndcg10": 0.6126
+    },
+    {
+      "arm": "best, rerank pool 10 (latency opt.)",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.4094,
+      "mrr": 0.5651,
+      "ndcg10": 0.4905
+    },
+    {
+      "arm": "contextual dense only (V6 dense)",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.3723,
+      "mrr": 0.4969,
+      "ndcg10": 0.4244
+    },
+    {
+      "arm": "contextual dense only (V6 dense)",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.3548,
+      "mrr": 0.4983,
+      "ndcg10": 0.4076
+    },
+    {
+      "arm": "contextual dense only (V6 dense)",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.1867,
+      "mrr": 0.302,
+      "ndcg10": 0.2243
+    },
+    {
+      "arm": "contextual dense only (V6 dense)",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.3293,
+      "mrr": 0.4399,
+      "ndcg10": 0.3584
+    },
+    {
+      "arm": "contextual dense only (V6 dense)",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.6103,
+      "mrr": 0.7247,
+      "ndcg10": 0.6785
+    },
+    {
+      "arm": "contextual dense only (V6 dense)",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.4341,
+      "mrr": 0.5787,
+      "ndcg10": 0.5191
+    },
+    {
+      "arm": "decompose+hybrid+contextual, no rerank",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.511,
+      "mrr": 0.6333,
+      "ndcg10": 0.5747
+    },
+    {
+      "arm": "decompose+hybrid+contextual, no rerank",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.5732,
+      "mrr": 0.6297,
+      "ndcg10": 0.6133
+    },
+    {
+      "arm": "decompose+hybrid+contextual, no rerank",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.305,
+      "mrr": 0.4914,
+      "ndcg10": 0.3874
+    },
+    {
+      "arm": "decompose+hybrid+contextual, no rerank",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.4866,
+      "mrr": 0.6101,
+      "ndcg10": 0.5405
+    },
+    {
+      "arm": "decompose+hybrid+contextual, no rerank",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.6838,
+      "mrr": 0.8044,
+      "ndcg10": 0.7519
+    },
+    {
+      "arm": "decompose+hybrid+contextual, no rerank",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.546,
+      "mrr": 0.6667,
+      "ndcg10": 0.6237
+    },
+    {
+      "arm": "decompose+hybrid, no rerank",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.414,
+      "mrr": 0.6003,
+      "ndcg10": 0.4652
+    },
+    {
+      "arm": "decompose+hybrid, no rerank",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.4649,
+      "mrr": 0.533,
+      "ndcg10": 0.4561
+    },
+    {
+      "arm": "decompose+hybrid, no rerank",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.2517,
+      "mrr": 0.5147,
+      "ndcg10": 0.3145
+    },
+    {
+      "arm": "decompose+hybrid, no rerank",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.3952,
+      "mrr": 0.5953,
+      "ndcg10": 0.4411
+    },
+    {
+      "arm": "decompose+hybrid, no rerank",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.548,
+      "mrr": 0.7763,
+      "ndcg10": 0.6526
+    },
+    {
+      "arm": "decompose+hybrid, no rerank",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.4409,
+      "mrr": 0.6075,
+      "ndcg10": 0.4997
+    },
+    {
+      "arm": "hybrid+contextual, no rerank",
+      "slice": "ALL",
+      "n": 112,
+      "recall5": 0.2875,
+      "mrr": 0.4035,
+      "ndcg10": 0.3654
+    },
+    {
+      "arm": "hybrid+contextual, no rerank",
+      "slice": "ai_ml_engineer",
+      "n": 38,
+      "recall5": 0.2807,
+      "mrr": 0.4898,
+      "ndcg10": 0.396
+    },
+    {
+      "arm": "hybrid+contextual, no rerank",
+      "slice": "data_analyst",
+      "n": 40,
+      "recall5": 0.1633,
+      "mrr": 0.2381,
+      "ndcg10": 0.2261
+    },
+    {
+      "arm": "hybrid+contextual, no rerank",
+      "slice": "few_req(<3)",
+      "n": 66,
+      "recall5": 0.2742,
+      "mrr": 0.4142,
+      "ndcg10": 0.3554
+    },
+    {
+      "arm": "hybrid+contextual, no rerank",
+      "slice": "fullstack_web_dev",
+      "n": 34,
+      "recall5": 0.4412,
+      "mrr": 0.5014,
+      "ndcg10": 0.495
+    },
+    {
+      "arm": "hybrid+contextual, no rerank",
+      "slice": "multi_req(>=3)",
+      "n": 46,
+      "recall5": 0.3065,
+      "mrr": 0.388,
+      "ndcg10": 0.3796
+    }
+  ]
+}

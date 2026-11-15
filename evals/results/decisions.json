@@ -1,0 +1,45 @@
+{
+  "per_persona": {
+    "ai_ml_engineer": {
+      "n": 73,
+      "precision": 0.75,
+      "recall": 0.6,
+      "f1": 0.6667
+    },
+    "fullstack_web_dev": {
+      "n": 72,
+      "precision": 0.8462,
+      "recall": 0.6471,
+      "f1": 0.7333
+    },
+    "data_analyst": {
+      "n": 73,
+      "precision": 0.5714,
+      "recall": 0.32,
+      "f1": 0.4103
+    }
+  },
+  "overall": {
+    "precision": 0.75,
+    "recall": 0.5357,
+    "f1": 0.625
+  },
+  "scam": {
+    "precision": 0.9048,
+    "recall": 1.0,
+    "f1": 0.95
+  },
+  "price_in_market_band": {
+    "rate": 0.8,
+    "n": 60
+  },
+  "latency_s": {
+    "analysed_p50": 0.403,
+    "analysed_p95": 0.647,
+    "proposal_p50": 0.504,
+    "proposal_p95": 0.696
+  },
+  "dead_letters": [],
+  "profile": "offline",
+  "labels": "silver (rule-derived)"
+}

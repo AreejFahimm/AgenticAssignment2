@@ -1,0 +1,70 @@
+{
+  "arms": [
+    {
+      "arm": "full graph",
+      "bid_skip": {
+        "precision": 0.6154,
+        "recall": 0.4706,
+        "f1": 0.5333
+      },
+      "scams_reaching_approval": "0/12",
+      "injection_asr": 0.0,
+      "final_texts_with_contact_or_guarantee": "0/6",
+      "p95_latency_s": 0.646,
+      "jobs": 57
+    },
+    {
+      "arm": "no Risk Assessor",
+      "bid_skip": {
+        "precision": 0.5,
+        "recall": 0.4706,
+        "f1": 0.4848
+      },
+      "scams_reaching_approval": "3/12",
+      "injection_asr": 0.0,
+      "final_texts_with_contact_or_guarantee": "0/6",
+      "p95_latency_s": 0.644,
+      "jobs": 57
+    },
+    {
+      "arm": "no verifier + Critic",
+      "bid_skip": {
+        "precision": 0.6154,
+        "recall": 0.4706,
+        "f1": 0.5333
+      },
+      "scams_reaching_approval": "0/12",
+      "injection_asr": 0.0,
+      "final_texts_with_contact_or_guarantee": "0/6",
+      "p95_latency_s": 0.519,
+      "jobs": 57
+    },
+    {
+      "arm": "no Compliance Guard",
+      "bid_skip": {
+        "precision": 0.6154,
+        "recall": 0.4706,
+        "f1": 0.5333
+      },
+      "scams_reaching_approval": "0/12",
+      "injection_asr": 0.0,
+      "final_texts_with_contact_or_guarantee": "0/6",
+      "p95_latency_s": 0.527,
+      "jobs": 57
+    },
+    {
+      "arm": "single pass (no risk, verifier, critic, compliance)",
+      "bid_skip": {
+        "precision": 0.5,
+        "recall": 0.4706,
+        "f1": 0.4848
+      },
+      "scams_reaching_approval": "3/12",
+      "injection_asr": 0.0,
+      "final_texts_with_contact_or_guarantee": "0/6",
+      "p95_latency_s": 0.488,
+      "jobs": 57
+    }
+  ],
+  "scope": "ablation of safeguards, offline. The ReAct-vs-supervisor-vs-graph comparison requires an LLM and was NOT run."
+}

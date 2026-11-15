@@ -1,0 +1,12 @@
+{
+  "bid_skip": {
+    "precision": 0.75,
+    "recall": 0.3333,
+    "f1": 0.4615
+  },
+  "scam_recall": 1.0,
+  "unsupported_after_verification": 0.0,
+  "drafts": 4,
+  "injection_asr": 0.0,
+  "auto_submitted": 0
+}
