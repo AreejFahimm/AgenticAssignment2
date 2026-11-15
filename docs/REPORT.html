@@ -1,0 +1,428 @@
+<!doctype html><meta charset='utf-8'><style>body{font:10.5px/1.35 'Segoe UI',Arial,sans-serif;margin:0;color:#111}h1{font-size:19px;margin:0 0 4px}h2{font-size:13.5px;margin:12px 0 4px;border-bottom:1px solid #ccc}
+h3{font-size:11.5px;margin:8px 0 3px}table{border-collapse:collapse;width:100%;margin:4px 0}th,td{border:1px solid #bbb;padding:2px 5px;text-align:left;vertical-align:top}
+th{background:#eee}code{font-size:9.5px;background:#f3f3f3;padding:0 2px}p,li{margin:2px 0}ul,ol{margin:2px 0 2px 16px;padding:0}</style><h1>GigBid: engineering design review (AI-4016 R&amp;D report)</h1>
+<p><strong>Author:</strong> <em>your name / roll number</em> · <strong>Repo:</strong> <em>link</em> · <strong>Live:</strong> <em>link</em> · <strong>Everything below cites <code>evals/results/*.json</code> (tables in Appendix A are generated from them) or a file in the repo.</strong>
+<strong>Read first (scope):</strong> all measurements use the <strong>offline profile</strong> (deterministic heuristics for analyst/risk/writer/critic, no LLM) on <strong>silver labels</strong> (rule-derived, not human-checked) over <strong>real Kaggle job posts + synthetic personas/clients</strong>. LLM-profile quality, live Upwork, Docker and Postgres were not run.</p>
+<h2>1. Problem and constraints</h2>
+<p>A freelancer loses hours scanning feeds, burns paid Connects on unwinnable jobs, sends generic proposals and meets scams (free work, off-platform payment, prompt-injection text). GigBid automates discovery, assessment and drafting; <strong>the human decides</strong>.
+Never automated: sending a proposal or message, spending Connects, accepting terms, contacting a client off-platform, claiming experience the portfolio does not show. Enforced by a LangGraph <code>interrupt()</code> that is the only path to the <code>submit</code>/<code>send</code> nodes (ADR 0002); there is no auto-send setting.
+Declared budgets (<code>agent/config.yaml</code>): p95 latency 15 s per job analysed and 30 s per proposal; USD 0.01 / 0.05 per job / proposal. Measured: Appendix A "Budgets" (0.65 s / 0.70 s p95 offline on a CPU laptop; USD 0 because no paid API was called, so these say nothing about LLM cost).</p>
+<h2>2. Architecture</h2>
+<p>Two durable hand-written LangGraph graphs (diagrams: <code>docs/images/*.mmd</code>, rationale per agent: <code>docs/ARCHITECTURE.md</code>).
+<strong>Bid graph</strong> (thread per job): Scout (dedup) → <strong>Analyst ‖ Risk ‖ Fit</strong> via <code>Send</code> → decide → Pricing → Writer → claim verifier → Critic (≤ 2 send-backs) → Compliance → dry-run preview → <strong>approval interrupt</strong> → submit (exactly-once keys).
+<strong>Conversation graph</strong> (thread per client conversation): Liaison (intent, reply, slots) → approval → send (+ tentative hold).
+<strong>One marketplace port</strong> (<code>agent/marketplace_port.py</code>) with a GigSim adapter (tested) and a live Upwork adapter skeleton (untested); agents only call <strong>MCP tools</strong> (Portfolio, Marketplace, Workspace servers; per-agent allowlists in <code>agent/mcp_client.py</code>). <strong>State / trace / memory are kept apart</strong> (ADR 0006): checkpointed state; JSON trace + audit log; long-term memory only through <code>promotion_rules.py</code> (style: ≥ 2 occurrences on ≥ 2 jobs; outcome: ≥ 3 samples per category).
+Stores: SQLite checkpointer (Postgres supported, untested), app DB, LangGraph store, in-process NumPy+BM25 index (no vector database). Frontend: React/Vite/TS with a client generated from FastAPI's OpenAPI.</p>
+<h2>3. R&amp;D question A: tool granularity</h2>
+<p><em>Hypothesis (before running):</em> BEST (rewritten, task-oriented descriptions) ≥ FINE (27 one-purpose tools) &gt; COARSE (3 mega-tools); COARSE uses the fewest tokens.
+<em>Setup:</em> 40 tasks with known correct tool/arguments (<code>evals/runners/tool_granularity.py</code>); an <strong>offline embedding selector</strong> over tool names+descriptions (no LLM). <em>Results</em> (<code>tool_granularity.json</code>): BEST 0.80 selection accuracy (388 prompt-tokens of tool list), FINE 0.50 (232), COARSE 0.50 at server level only (52).
+<em>Conclusion:</em> description quality, not tool count, drives separability; coarse tools are cheap but their action argument is invisible to selection. <strong>Limits:</strong> this measures description discriminability, not agent behaviour; argument accuracy needs an LLM run and was <strong>not measured</strong>.</p>
+<h2>4. R&amp;D question B: RAG</h2>
+<p><em>Variants implemented:</em> V0 naive dense; V1 requirement decomposition; V2 hybrid BM25+dense (RRF); V3 cross-encoder rerank; V4 outcome-aware boost; V6 contextual chunks; V8 corrective RAG as a LangGraph loop (threshold calibrated on dev, checked on held-out: <code>v8_calibration.json</code>, F1 0.52 on held-out vs 0.0 at the default). Not built: V5, V7, V9.
+<em>Hypothesis (before running):</em> decomposition + hybrid + rerank raises Recall@5 over V0 by ≥ 10 points on jobs with ≥ 3 requirements. <strong>Refuted:</strong> <code>best</code> gained +1.9 points overall (0.369 vs 0.350) and lost MRR; hybrid alone (V2) and the outcome boost (V4) were <em>worse</em> than V0.
+<em>Ablation</em> (Appendix A, n = 112 jobs with gold evidence): removing the reranker <strong>improved</strong> Recall@5 (0.359 → 0.414): the MiniLM cross-encoder is out-of-domain for this corpus and costs ~1.5 s/job. The winning arm is <strong>decomposition + hybrid + contextual chunks, no rerank: Recall@5 0.511, MRR 0.633, nDCG@10 0.575 vs V0 0.357 / 0.527 / 0.413 (+15.4 points)</strong>, at ~0.2 s p95 retrieval. <strong>That is what ships</strong> (<code>rag.variant: ship</code>). Caveat: contextual chunks expose the same skill metadata that defines the silver gold labels, so part of the gain is circular; the honest reading is "metadata-aware indexing helps when skills are implied rather than named", not "+15 points on real portfolios".
+<em>By persona and job type:</em> <code>rag_retrieval.json</code> / <code>ablation.json</code> slices (multi- vs few-requirement jobs show similar V0 vs best gaps; decomposition helped less than hypothesised).
+<em>Where better retrieval did not help replies:</em> in GigSim, V0, V2, <code>best</code> and <code>ship</code> reply rates are within noise of each other (Appendix A), because the simulated clients reward skill mentions and non-generic text, which every grounded variant provides; the large effect is grounded vs generic (control arm).
+<em>Claim verification (B3):</em> the offline writer is extractive, so natural drafts contain no fabrications. We planted 90 fabricated experience sentences into real drafts: <strong>all 90 removed; 0 of 104 true claims removed; unsupported-claim rate 0.51 → 0.00</strong>. This is an easy test (fabrications contain numbers/entities absent from evidence); paraphrased or partially true fabrications are not tested.
+<em>Judge calibration:</em> <strong>not done: needs the author's 30 labels</strong> (<code>judge_calibration prepare/compute</code>). No judge score is reported. Human pairwise panel: <strong>not run</strong> (<code>pairwise_panel</code>).</p>
+<h2>5. R&amp;D question C: is multi-agent worth it?</h2>
+<p><strong>Not answered as specified.</strong> The requested comparison (single ReAct agent vs <code>langgraph-supervisor</code> vs this graph) needs an LLM that chooses tools; none was run (<code>agent_comparison.py</code> contains the stubs). What was measured instead is an <strong>ablation of the graph's safeguards</strong> (<code>agent_comparison.json</code>, 57 jobs): removing the Risk Assessor lets 2 of 12 planted scams reach the approval screen (0 with it) and lowers bid/skip F1 0.552 → 0.516; removing verifier+Critic or Compliance changed nothing measurable offline, because the extractive writer never produces unsupported claims or contact details. So the evidence for multi-agent value here is the <strong>parallel risk veto</strong> and the <strong>approval architecture</strong>, not the Critic/Compliance loops, and a ReAct baseline might win on easy jobs: unknown.</p>
+<h2>6. The change request</h2>
+<p><strong>Fill in from the 2 Nov Classroom announcement.</strong> Design for it: rules, thresholds and prompts are data (<code>agent/config.yaml</code>, <code>gigsim_local/platform_policy.json</code>, fetched live by the runner; ADR 0007; <code>docs/CHANGE_REQUEST.md</code> maps each kind of rule to the file to edit). Record: time taken, <code>git diff --stat</code>, and a test.</p>
+<h2>7. Signature extension (X2: proposal experiments)</h2>
+<p>Two writer strategies (evidence-first vs concise+question) A/B-tested on the same jobs in GigSim with paired design, exact McNemar and bootstrap CI (<code>docs/EXTENSION.md</code>, Appendix A). Result: <strong>no significant difference</strong> at this sample size. The simulator is rule-based, so this validates the experiment machinery, not client behaviour.</p>
+<h2>8. Failure analysis</h2>
+<p>Grouped from the dev runs and development incidents (fix tried → worked?):
+| Class | Example | Fix | Worked |
+|---|---|---|---|
+| Wrong skip / missed evidence | bid recall only 0.54: many gold-"bid" real jobs get fit &lt; 0.30 (keyword skills noisy, e.g. "Data Entry" tagged "excel") | none beyond contextual retrieval | partly |
+| Tool/graph error | <code>except Exception</code> swallowed <code>GraphInterrupt</code> → every approval became dead_letter | re-raise <code>GraphBubbleUp</code> | yes |
+| Unsupported claim (detector) | claim regex corrupted by a shell heredoc, verifier passed everything | fixed + printed labels on real drafts | yes |
+| Compliance miss | email regex ate the sentence-final period, deleting valid sentences / blocking a valid edit | tighten regex | yes |
+| Cross-tenant bug (simulator) | idempotency keys global, not per user | scope by (user, key) | yes |
+| Generic opening / bad text | real posts end in boilerplate ("Budget: … Skills: …") polluting requirements and drafts | strip trailer in preprocessing | yes |
+| Retrieval | V8 refused nothing at its default threshold | calibrate on dev, check on held-out | yes (F1 0.52) |
+| Injection | paraphrased instructions evade the regex (detected 2/10) | none; approval gate limits damage | no |
+| Mispriced | 20% of bids outside the market p25–p75 band | not fixed | – |
+| Tool error / degraded | marketplace down | queue + banner + redrive (tested) | yes |
+(Only 10 classes of the required ≥ 10 <em>failed dev jobs</em> are described at the incident level; add 10 concrete failed job ids from <code>evals/results</code> traces before submitting.)</p>
+<h2>9. Safety and platform respect</h2>
+<p>Enforced: untrusted text delimited/scanned/neutralised; nothing sent without an approval interrupt (auto-submitted jobs: 0 in every eval); unsupported claims removed; contact details/guarantees/off-platform asks stripped; PII masked in logs, traces and the audit log; OAuth tokens Fernet-encrypted; every query tenant-scoped; no scraping/browser automation/cookies.
+Injection results (Appendix A): the Risk Assessor flags 100% of the planted injections with defences on (0% off); the payload never reached the text to be sent in either mode because the offline writer is extractive, so this does <strong>not</strong> show the defence preventing harm. <strong>An attack that beats it:</strong> paraphrased instructions (2/10 detected). With an LLM writer that risk is real; the approval gate is the backstop. Upwork: live mode not exercised.</p>
+<h2>10. Hidden test results against declared budgets</h2>
+<p><strong>Not available yet:</strong> the instructor runs the hidden set after the deadline. Dev-set numbers vs budgets are in Appendix A. Do not read the dev results as hidden-set predictions (silver labels, synthetic personas, offline profile).</p>
+<h1>Appendix A: generated results (from evals/results/*.json)</h1>
+<h3>Retrieval variants (dev set, silver labels)</h3>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Evidence Recall@5</th>
+<th>MRR</th>
+<th>nDCG@10</th>
+<th>Unsupported claims / proposal</th>
+<th>Judge score</th>
+<th>GigSim reply rate</th>
+<th>p95 retrieval latency (s)</th>
+<th>Cost / proposal (USD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v0</td>
+<td>0.350</td>
+<td>0.540</td>
+<td>0.415</td>
+<td>0.000</td>
+<td>see judge_calibration</td>
+<td>0.278</td>
+<td>0.52</td>
+<td>0 (offline profile)</td>
+</tr>
+<tr>
+<td>v1</td>
+<td>0.321</td>
+<td>0.500</td>
+<td>0.387</td>
+<td>0.000</td>
+<td>see judge_calibration</td>
+<td>n/a</td>
+<td>0.14</td>
+<td>0 (offline profile)</td>
+</tr>
+<tr>
+<td>v2</td>
+<td>0.273</td>
+<td>0.412</td>
+<td>0.343</td>
+<td>0.000</td>
+<td>see judge_calibration</td>
+<td>0.355</td>
+<td>0.03</td>
+<td>0 (offline profile)</td>
+</tr>
+<tr>
+<td>v3</td>
+<td>0.344</td>
+<td>0.453</td>
+<td>0.382</td>
+<td>0.000</td>
+<td>see judge_calibration</td>
+<td>n/a</td>
+<td>5.19</td>
+<td>0 (offline profile)</td>
+</tr>
+<tr>
+<td>v4</td>
+<td>0.261</td>
+<td>0.354</td>
+<td>0.306</td>
+<td>0.000</td>
+<td>see judge_calibration</td>
+<td>n/a</td>
+<td>0.03</td>
+<td>0 (offline profile)</td>
+</tr>
+<tr>
+<td>v6</td>
+<td>0.350</td>
+<td>0.455</td>
+<td>0.387</td>
+<td>0.000</td>
+<td>see judge_calibration</td>
+<td>n/a</td>
+<td>3.89</td>
+<td>0 (offline profile)</td>
+</tr>
+<tr>
+<td>v8</td>
+<td>0.212</td>
+<td>0.337</td>
+<td>0.226</td>
+<td>0.000</td>
+<td>see judge_calibration</td>
+<td>n/a</td>
+<td>6.47</td>
+<td>0 (offline profile)</td>
+</tr>
+<tr>
+<td>best</td>
+<td>0.369</td>
+<td>0.501</td>
+<td>0.415</td>
+<td>0.000</td>
+<td>see judge_calibration</td>
+<td>0.457</td>
+<td>4.73</td>
+<td>0 (offline profile)</td>
+</tr>
+<tr>
+<td>best_ctx</td>
+<td>0.386</td>
+<td>0.522</td>
+<td>0.457</td>
+<td>0.000</td>
+<td>see judge_calibration</td>
+<td>n/a</td>
+<td>3.48</td>
+<td>0 (offline profile)</td>
+</tr>
+<tr>
+<td>ship</td>
+<td>0.505</td>
+<td>0.643</td>
+<td>0.579</td>
+<td>0.000</td>
+<td>see judge_calibration</td>
+<td>0.375</td>
+<td>0.20</td>
+<td>0 (offline profile)</td>
+</tr>
+</tbody>
+</table>
+<p>V8 refused on 7/11 jobs with no gold evidence.</p>
+<h3>Ablation of the best pipeline (one component at a time)</h3>
+<table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>n</th>
+<th>Recall@5</th>
+<th>MRR</th>
+<th>nDCG@10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V0 baseline</td>
+<td>112</td>
+<td>0.357</td>
+<td>0.527</td>
+<td>0.413</td>
+</tr>
+<tr>
+<td>best (decompose+hybrid+rerank)</td>
+<td>112</td>
+<td>0.359</td>
+<td>0.485</td>
+<td>0.408</td>
+</tr>
+<tr>
+<td>best + contextual indexing (V6)</td>
+<td>112</td>
+<td>0.377</td>
+<td>0.502</td>
+<td>0.447</td>
+</tr>
+<tr>
+<td>best + outcome boost</td>
+<td>112</td>
+<td>0.356</td>
+<td>0.473</td>
+<td>0.397</td>
+</tr>
+<tr>
+<td>best - decompose</td>
+<td>112</td>
+<td>0.331</td>
+<td>0.438</td>
+<td>0.378</td>
+</tr>
+<tr>
+<td>best - hybrid</td>
+<td>112</td>
+<td>0.346</td>
+<td>0.486</td>
+<td>0.393</td>
+</tr>
+<tr>
+<td>best - rerank</td>
+<td>112</td>
+<td>0.414</td>
+<td>0.600</td>
+<td>0.465</td>
+</tr>
+<tr>
+<td>best, rerank pool 10 (latency opt.)</td>
+<td>112</td>
+<td>0.383</td>
+<td>0.516</td>
+<td>0.454</td>
+</tr>
+<tr>
+<td>contextual dense only (V6 dense)</td>
+<td>112</td>
+<td>0.372</td>
+<td>0.497</td>
+<td>0.424</td>
+</tr>
+<tr>
+<td>decompose+hybrid+contextual, no rerank</td>
+<td>112</td>
+<td>0.511</td>
+<td>0.633</td>
+<td>0.575</td>
+</tr>
+<tr>
+<td>decompose+hybrid, no rerank</td>
+<td>112</td>
+<td>0.414</td>
+<td>0.600</td>
+<td>0.465</td>
+</tr>
+<tr>
+<td>hybrid+contextual, no rerank</td>
+<td>112</td>
+<td>0.287</td>
+<td>0.404</td>
+<td>0.365</td>
+</tr>
+</tbody>
+</table>
+<h3>Decisions (bid vs skip, scam detection)</h3>
+<ul>
+<li>bid-or-skip: precision 0.750, recall 0.536, F1 0.625</li>
+<li>scam detection: precision 0.905, recall 1.000</li>
+<li>price inside market band: 0.800 (n=60)</li>
+<li>latency per job analysed p50/p95: 0.403s / 0.647s; per proposal p50/p95: 0.504s / 0.696s</li>
+</ul>
+<h3>Budgets: declared vs measured (offline profile, CPU laptop, dev set)</h3>
+<table>
+<thead>
+<tr>
+<th>Budget</th>
+<th>Declared</th>
+<th>Measured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p95 latency per job analysed (s)</td>
+<td>15</td>
+<td>0.647</td>
+</tr>
+<tr>
+<td>p95 latency per proposal (s)</td>
+<td>30</td>
+<td>0.696</td>
+</tr>
+<tr>
+<td>USD per job analysed / per proposal</td>
+<td>0.01 / 0.05</td>
+<td>0 / 0 (no paid API; LLM profiles not measured)</td>
+</tr>
+</tbody>
+</table>
+<h3>Prompt-injection attack success rate</h3>
+<ul>
+<li>payload reaches the text that would be sent: defences OFF 0.000, ON 0.000; injection FLAGGED by Risk Assessor: OFF 0.000, ON 1.000; auto-submitted jobs: 0</li>
+<li>attack that beats the regex layer: paraphrased instructions detected 2/10 (detection rate 0.200)</li>
+</ul>
+<h3>Claim verification</h3>
+<ul>
+<li>planted fabrications removed: 100/100 (recall 1.000); true claims wrongly removed: 0/101</li>
+<li>unsupported-claim rate before verification 0.600 -&gt; after 0.000</li>
+</ul>
+<h3>GigSim outcomes (simulated approval, fixed job set)</h3>
+<table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>submitted</th>
+<th>reply rate</th>
+<th>interview rate</th>
+<th>hire rate</th>
+<th>Connects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>generic</td>
+<td>75</td>
+<td>0.013</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>600</td>
+</tr>
+<tr>
+<td>v0</td>
+<td>36</td>
+<td>0.278</td>
+<td>0.167</td>
+<td>0.056</td>
+<td>288</td>
+</tr>
+<tr>
+<td>v2</td>
+<td>31</td>
+<td>0.355</td>
+<td>0.097</td>
+<td>0.000</td>
+<td>248</td>
+</tr>
+<tr>
+<td>best</td>
+<td>35</td>
+<td>0.457</td>
+<td>0.057</td>
+<td>0.029</td>
+<td>280</td>
+</tr>
+<tr>
+<td>ship</td>
+<td>40</td>
+<td>0.375</td>
+<td>0.125</td>
+<td>0.025</td>
+<td>320</td>
+</tr>
+</tbody>
+</table>
+<h3>X2 proposal A/B experiment</h3>
+<ul>
+<li>n=40 paired jobs; reply rate A (evidence-first) 0.400 vs B (concise+question) 0.425; diff -0.025 (95% CI [-0.25, 0.2]); McNemar exact p=1.00000; significant at 0.05: False</li>
+</ul>
+<h3>Retrieval latency by design (E5 optimisation: reranker pool size)</h3>
+<table>
+<thead>
+<tr>
+<th>Design</th>
+<th>mean s/job</th>
+<th>p95 s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v0</td>
+<td>0.114</td>
+<td>0.446</td>
+</tr>
+<tr>
+<td>v2 hybrid</td>
+<td>0.008</td>
+<td>0.022</td>
+</tr>
+<tr>
+<td>v3 rerank pool=20</td>
+<td>1.508</td>
+<td>4.065</td>
+</tr>
+<tr>
+<td>v3 rerank pool=10</td>
+<td>0.685</td>
+<td>1.629</td>
+</tr>
+<tr>
+<td>best pool=20</td>
+<td>1.485</td>
+<td>3.714</td>
+</tr>
+<tr>
+<td>best pool=10</td>
+<td>0.700</td>
+<td>1.774</td>
+</tr>
+</tbody>
+</table>
+<h3>Judge calibration</h3>
+<p>NOT YET CALIBRATED: label evals/datasets/judge_labels.csv, then run <code>python -m evals.runners.judge_calibration compute</code>. No judge score is reported until then.</p>
