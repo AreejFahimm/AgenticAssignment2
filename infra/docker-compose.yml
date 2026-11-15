@@ -1,0 +1,63 @@
+# docker compose -f infra/docker-compose.yml up --build     (from the repo root)
+# NOTE: written without Docker available in the dev environment: validate with `docker compose config` and see docs/RUNBOOK.md.
+# Defaults run the whole product on the OFFLINE profile (no GPU, no API key). Enable local open models with:
+#   MODEL_PROFILE=open LLM_BASE_URL=http://ollama:11434/v1 docker compose --profile llm up
+x-app: &app
+  build: { context: .., dockerfile: infra/docker/Dockerfile }
+  env_file: [{ path: ../.env, required: false }]
+  environment: &env
+    MODEL_PROFILE: ${MODEL_PROFILE:-offline}
+    LLM_BASE_URL: ${LLM_BASE_URL:-}
+    REVIEWER_EMAIL: ${REVIEWER_EMAIL:-reviewer@gigbid.demo}
+    REVIEWER_PASSWORD: ${REVIEWER_PASSWORD:?set REVIEWER_PASSWORD in .env}
+    APP_SECRET_KEY: ${APP_SECRET_KEY:?set APP_SECRET_KEY in .env}
+    TOKEN_ENC_KEY: ${TOKEN_ENC_KEY:-}
+    DATABASE_URL: ${DATABASE_URL:-}            # empty = SQLite on the volume; postgresql://gigbid:gigbid@postgres:5432/gigbid = Postgres checkpointer
+    CHECKPOINT_DB: /data/checkpoints.sqlite
+    APP_DB: /data/app.sqlite
+    MEMORY_DB: /data/memory.sqlite
+    GIGSIM_INPROCESS: "1"
+    GIGSIM_BASE_URL: http://gigsim:8081
+    LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+    LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+  volumes: [ "appdata:/data" ]
+
+services:
+  api:                                         # FastAPI + the built React app on :8000 (web)
+    <<: *app
+    ports: ["8000:8000"]
+    depends_on: [postgres, redis]
+  worker:                                      # scheduled scouting + long runs (asyncio scheduler; Arq/Redis variant in worker/arq_settings.py)
+    <<: *app
+    command: ["python", "-m", "worker.scheduler"]
+    depends_on: [api]
+  gigsim:                                      # marketplace simulator (GigSim-local) as its own service
+    <<: *app
+    command: ["python", "-m", "uvicorn", "gigsim_local.app:app", "--host", "0.0.0.0", "--port", "8081"]
+    ports: ["8081:8081"]
+  mcp-portfolio:
+    <<: *app
+    command: ["python", "-m", "mcp_servers.portfolio.server", "--http", "--port", "9101"]
+    ports: ["9101:9101"]
+  mcp-marketplace:
+    <<: *app
+    command: ["python", "-m", "mcp_servers.marketplace.server", "--http", "--port", "9102"]
+    environment: { <<: *env, MARKETPLACE_MCP_TOKENS: "${MARKETPLACE_MCP_TOKENS:-dev-token:local-user}" }
+    ports: ["9102:9102"]
+  mcp-workspace:
+    <<: *app
+    command: ["python", "-m", "mcp_servers.workspace.server", "--http", "--port", "9103"]
+    ports: ["9103:9103"]
+  postgres:
+    image: postgres:16
+    environment: { POSTGRES_USER: gigbid, POSTGRES_PASSWORD: gigbid, POSTGRES_DB: gigbid }
+    volumes: [ "pgdata:/var/lib/postgresql/data" ]
+  redis:
+    image: redis:7
+  ollama:                                      # open-model service for the `open` profile (CPU works for small models; GPU optional)
+    image: ollama/ollama
+    profiles: ["llm"]
+    ports: ["11434:11434"]
+    volumes: [ "ollama:/root/.ollama" ]
+
+volumes: { appdata: {}, pgdata: {}, ollama: {} }
