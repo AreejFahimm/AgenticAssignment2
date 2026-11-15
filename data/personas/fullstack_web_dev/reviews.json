@@ -1,0 +1,72 @@
+[
+  {
+    "review_id": "rev-629711b1da",
+    "project_id": "ful-p09a",
+    "rating": 4.0,
+    "text": "Great work on the aws deployment pipeline (retail) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-cbc3552eed",
+    "project_id": "ful-p01a",
+    "rating": 4.5,
+    "text": "Great work on the e-commerce storefront (healthcare) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-f809a1a5a7",
+    "project_id": "ful-p05b",
+    "rating": 5.0,
+    "text": "Great work on the real-time chat feature project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-bf11e85b9a",
+    "project_id": "ful-p11b",
+    "rating": 4.0,
+    "text": "Great work on the vue progressive web app project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-328b9f1185",
+    "project_id": "ful-p03b",
+    "rating": 4.5,
+    "text": "Great work on the internal admin panel project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-cd862a5e3e",
+    "project_id": "ful-p01b",
+    "rating": 4.5,
+    "text": "Great work on the e-commerce storefront project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-a90b2699da",
+    "project_id": "ful-p00a",
+    "rating": 5.0,
+    "text": "Great work on the saas subscription dashboard (saas) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-374827cf26",
+    "project_id": "ful-p06b",
+    "rating": 5.0,
+    "text": "Great work on the shopify theme customisation project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-4b4d7e019d",
+    "project_id": "ful-p07a",
+    "rating": 4.5,
+    "text": "Great work on the graphql gateway (e-commerce) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-b7412e04bf",
+    "project_id": "ful-p03a",
+    "rating": 5.0,
+    "text": "Great work on the internal admin panel (education) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  }
+]

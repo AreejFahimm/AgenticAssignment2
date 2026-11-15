@@ -1,0 +1,72 @@
+[
+  {
+    "review_id": "rev-c28e49453e",
+    "project_id": "ai_-p02a",
+    "rating": 4.0,
+    "text": "Great work on the churn prediction pipeline (logistics) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-7713f936f5",
+    "project_id": "ai_-p08b",
+    "rating": 4.5,
+    "text": "Great work on the resume screening assistant project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-90e347731a",
+    "project_id": "ai_-p10a",
+    "rating": 5.0,
+    "text": "Great work on the voice-of-customer topic mining (education) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-4b990d4b94",
+    "project_id": "ai_-p03b",
+    "rating": 4.0,
+    "text": "Great work on the defect detection in images project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-ffa1f14135",
+    "project_id": "ai_-p00a",
+    "rating": 5.0,
+    "text": "Great work on the support ticket classifier (e-commerce) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-0005820b77",
+    "project_id": "ai_-p11a",
+    "rating": 4.0,
+    "text": "Great work on the chatbot project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-eb7563c9da",
+    "project_id": "ai_-p09a",
+    "rating": 4.5,
+    "text": "Great work on the anomaly detection project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-295ab1cf88",
+    "project_id": "ai_-p04b",
+    "rating": 5.0,
+    "text": "Great work on the demand forecasting project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-ab9f6dbf2a",
+    "project_id": "ai_-p01a",
+    "rating": 4.0,
+    "text": "Great work on the document q&a assistant (real estate) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-e8aaa7f796",
+    "project_id": "ai_-p07a",
+    "rating": 4.0,
+    "text": "Great work on the mlops retraining workflow (logistics) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  }
+]

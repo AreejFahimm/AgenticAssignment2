@@ -1,0 +1,40 @@
+{
+  "persona_id": "data_analyst",
+  "display_name": "Jordan Lee (synthetic)",
+  "headline": "Data Analyst (SQL, BI dashboards, experimentation)",
+  "skills": [
+    "sql",
+    "excel",
+    "power bi",
+    "tableau",
+    "python",
+    "pandas",
+    "data visualization",
+    "google analytics",
+    "data cleaning",
+    "dashboard",
+    "looker",
+    "statistics",
+    "etl",
+    "dbt",
+    "bigquery",
+    "a/b testing",
+    "reporting",
+    "google sheets",
+    "r",
+    "web scraping"
+  ],
+  "core_stack": [
+    "sql",
+    "power bi",
+    "tableau",
+    "python",
+    "pandas",
+    "excel",
+    "dbt"
+  ],
+  "hourly_rate_usd": 24,
+  "minimum_project_budget_usd": 150,
+  "years_experience": 3,
+  "provenance": "synthetic:gen_personas:4016"
+}

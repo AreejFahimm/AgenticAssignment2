@@ -1,0 +1,40 @@
+{
+  "persona_id": "fullstack_web_dev",
+  "display_name": "Sam Rivera (synthetic)",
+  "headline": "Full-stack Web Developer (React / Node / Django)",
+  "skills": [
+    "react",
+    "next.js",
+    "typescript",
+    "javascript",
+    "node.js",
+    "django",
+    "flask",
+    "postgresql",
+    "mongodb",
+    "tailwind",
+    "rest api",
+    "graphql",
+    "aws",
+    "docker",
+    "stripe",
+    "html",
+    "css",
+    "vue",
+    "wordpress",
+    "shopify"
+  ],
+  "core_stack": [
+    "react",
+    "next.js",
+    "typescript",
+    "node.js",
+    "django",
+    "postgresql",
+    "docker"
+  ],
+  "hourly_rate_usd": 30,
+  "minimum_project_budget_usd": 250,
+  "years_experience": 5,
+  "provenance": "synthetic:gen_personas:4016"
+}

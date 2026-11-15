@@ -1,0 +1,40 @@
+{
+  "persona_id": "ai_ml_engineer",
+  "display_name": "Alex Morgan (synthetic)",
+  "headline": "AI/ML Engineer (NLP and applied ML)",
+  "skills": [
+    "python",
+    "pytorch",
+    "tensorflow",
+    "scikit-learn",
+    "nlp",
+    "llm",
+    "langchain",
+    "rag",
+    "computer vision",
+    "machine learning",
+    "deep learning",
+    "mlops",
+    "fastapi",
+    "docker",
+    "huggingface",
+    "classification",
+    "time series",
+    "recommendation",
+    "openai",
+    "chatbot"
+  ],
+  "core_stack": [
+    "python",
+    "pytorch",
+    "scikit-learn",
+    "langchain",
+    "rag",
+    "fastapi",
+    "docker"
+  ],
+  "hourly_rate_usd": 35,
+  "minimum_project_budget_usd": 300,
+  "years_experience": 4,
+  "provenance": "synthetic:gen_personas:4016"
+}

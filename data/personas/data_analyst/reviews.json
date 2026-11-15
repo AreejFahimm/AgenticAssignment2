@@ -1,0 +1,72 @@
+[
+  {
+    "review_id": "rev-80e41cb863",
+    "project_id": "dat-p11a",
+    "rating": 4.0,
+    "text": "Great work on the cohort retention study (fintech) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-e72eb29343",
+    "project_id": "dat-p11b",
+    "rating": 4.0,
+    "text": "Great work on the cohort retention study project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-d8f01eb305",
+    "project_id": "dat-p04b",
+    "rating": 4.0,
+    "text": "Great work on the a/b test analysis toolkit project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-3a4d63afd8",
+    "project_id": "dat-p09b",
+    "rating": 5.0,
+    "text": "Great work on the hr attrition analysis project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-2715bafffc",
+    "project_id": "dat-p03b",
+    "rating": 4.5,
+    "text": "Great work on the marketing attribution reporting project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-924926222f",
+    "project_id": "dat-p02a",
+    "rating": 4.0,
+    "text": "Great work on the survey data cleaning and report (education) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-dd21d32827",
+    "project_id": "dat-p08a",
+    "rating": 5.0,
+    "text": "Great work on the google sheets automation (real estate) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-bb866e86bb",
+    "project_id": "dat-p01b",
+    "rating": 4.0,
+    "text": "Great work on the sales funnel analysis project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-a897c5a8a0",
+    "project_id": "dat-p10b",
+    "rating": 4.0,
+    "text": "Great work on the web data collection (public apis) project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  },
+  {
+    "review_id": "rev-f6a941d36a",
+    "project_id": "dat-p05b",
+    "rating": 5.0,
+    "text": "Great work on the etl pipeline project. Communicative, delivered what was agreed, and the result held up in production.",
+    "provenance": "synthetic:gen_personas:4016"
+  }
+]
