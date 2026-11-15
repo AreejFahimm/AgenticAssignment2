@@ -1,0 +1,50 @@
+[project]
+name = "gigbid"
+version = "1.0.0"
+description = "GigBid: a multi-agent freelancer copilot (LangGraph, advanced RAG, MCP). AI-4016 R&D assignment."
+requires-python = ">=3.11"
+# Versions pinned to what the results in evals/results/ were produced with (Python 3.12.9, Windows 11).
+dependencies = [
+  "fastapi==0.162.4",
+  "uvicorn[standard]==0.54.0",
+  "pydantic==2.14.3",
+  "pyyaml==6.0.3",
+  "langgraph==1.2.20",
+  "langgraph-checkpoint-sqlite==3.1.3",
+  "langgraph-checkpoint-postgres==3.2.0",
+  "langchain-mcp-adapters==0.3.2",
+  "mcp==1.30.0",
+  "httpx==0.28.1",
+  "python-dotenv==1.2.4",
+  "python-multipart==0.0.33",
+  "cryptography==50.0.2",
+  "aiosqlite==0.22.1",
+  "psycopg[binary]==3.3.8",
+  "numpy==2.5.4",
+  "pandas==3.1.1",
+  "fastembed==0.9.1",
+  "rank-bm25==0.2.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.2.0", "pytest-asyncio==1.4.1.post1", "ruff"]
+worker = ["arq"]
+pdf = ["pypdf"]
+tracing = ["langfuse"]
+
+[tool.setuptools.packages.find]
+include = ["agent*", "apps*", "rag*", "mcp_servers*", "worker*", "evals*", "gigsim_local*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+markers = ["slow: loads embedding models"]
+
+[tool.ruff]
+line-length = 140
+extend-exclude = ["apps/web", "data", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501", "E402", "I001"]
