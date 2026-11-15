@@ -1,0 +1,82 @@
+# GigBid configuration. Models, thresholds, budgets and RULES live here, never in code (R-config, change request).
+marketplace:
+  mode: gigsim            # gigsim | upwork_live   (switch = this one line; see agent/marketplace_port.py)
+  max_requests_per_minute: 20
+  live_poll_interval_minutes: 240   # conservative: justified in docs/RUNBOOK.md
+
+models:
+  profile: offline        # offline | open | paid.  'offline' = deterministic heuristics (no LLM), used for CI and demos
+  profiles:
+    open:                 # REQUIRED profile: open-weight models only. Endpoint is any OpenAI-compatible server
+      base_url_env: LLM_BASE_URL     # e.g. http://localhost:11434/v1 (Ollama) | https://api.groq.com/openai/v1 | OpenRouter | Together
+      api_key_env: LLM_API_KEY
+      nodes:              # choose by measurement (evals/results/model_comparison.json), route by node
+        scout: qwen3:4b
+        analyst: qwen3:8b
+        risk_assessor: qwen3:4b
+        fit_matcher: qwen3:8b
+        pricing: qwen3:4b
+        writer: gpt-oss-20b
+        critic: gpt-oss-20b
+        compliance: qwen3:4b
+        client_liaison: gpt-oss-20b
+      fallback: {scout: qwen3:4b, analyst: qwen3:4b, risk_assessor: qwen3:4b, pricing: qwen3:4b, compliance: qwen3:4b}
+      usd_per_mtok: {in: 0.0, out: 0.0}   # local = $0; set hosted prices here
+    paid:                 # OPTIONAL; only where it beats open enough to justify cost
+      base_url_env: PAID_LLM_BASE_URL
+      api_key_env: PAID_LLM_API_KEY
+      nodes: {writer: configure-your-model, critic: configure-your-model, client_liaison: configure-your-model}
+      usd_per_mtok: {in: 3.0, out: 15.0}
+  embeddings: BAAI/bge-small-en-v1.5      # open, CPU
+  reranker: Xenova/ms-marco-MiniLM-L-6-v2 # open, CPU (bge-reranker-v2-m3 recommended when GPU/CPU budget allows)
+
+rag:
+  variant: ship           # chosen by evals/results/ablation.json: decompose + hybrid + contextual, no reranker (see report section 4)
+  k: 5
+
+budgets:                  # declared targets (E5); measured values reported in evals/results/budgets.json
+  max_graph_steps: 30
+  max_revisions: 2
+  max_tokens_per_job: 12000
+  p95_latency_s_per_job_analysed: 15
+  p95_latency_s_per_proposal: 30
+  usd_per_job_analysed: 0.01
+  usd_per_proposal: 0.05
+
+thresholds:
+  minimum_fit_score: 0.45
+  maximum_risk_score: 0.70
+  skip_if_fit_below: 0.30      # auto-skip allowed (autonomy setting) but NEVER auto-send
+  watch_band: [0.30, 0.45]
+
+pricing:                  # rules, not code
+  floor_hourly_multiplier: 0.85
+  default_bid_percentile: 0.5   # bid at market median unless client spend is high
+  high_spend_client_usd: 10000
+  high_spend_percentile: 0.65
+  max_connects_per_bid: 16       # CHANGE-REQUEST HOOK: raise/lower without touching code
+  min_expected_value_ratio: 1.0  # expected reply value / connects cost must exceed this
+
+compliance:               # CHANGE-REQUEST HOOK: platform rules as data. Instructor policy pack text lives in data/policy_pack/.
+  min_cover_letter_chars: 0      # overridden at runtime by the marketplace's /policy endpoint if stricter
+  max_cover_letter_chars: 3000
+  banned_phrases: ["guarantee", "100% success", "i promise", "risk-free", "whatsapp", "telegram", "skype", "pay outside", "outside the platform", "gift card"]
+  strip_patterns: ["email", "phone", "url_handle"]
+  require_evidence_citations: true
+
+critic:
+  min_chars: 350
+  max_chars: 1600
+  generic_openers: ["hello sir", "dear sir", "i am a hard-working", "i can do this job", "please hire me", "i am writing to apply"]
+  max_unsupported_claims: 0
+
+memory:                   # explicit promotion rules (R7); implemented in agent/memory/promotion_rules.py
+  style:
+    min_occurrences: 2          # an edit pattern must be seen in >= 2 different proposals
+    min_distinct_jobs: 2
+  outcome:
+    min_samples_per_category: 3
+    window_days: 90
+
+autonomy:
+  default: suggest              # suggest | auto_skip_low_fit.  Auto-send does not exist.
