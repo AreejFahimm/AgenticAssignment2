@@ -1,0 +1,28 @@
+{
+  "mode": "offline-embedding-selector",
+  "n_tasks": 40,
+  "designs": {
+    "fine": {
+      "n_tools": 27,
+      "selection_accuracy": 0.5,
+      "tokens_per_task": 232,
+      "argument_accuracy": null,
+      "note": ""
+    },
+    "coarse": {
+      "n_tools": 3,
+      "selection_accuracy": 0.5,
+      "tokens_per_task": 52,
+      "argument_accuracy": null,
+      "note": "coarse: server-level accuracy only; the action argument is not measurable offline"
+    },
+    "best": {
+      "n_tools": 16,
+      "selection_accuracy": 0.8,
+      "tokens_per_task": 388,
+      "argument_accuracy": null,
+      "note": ""
+    }
+  },
+  "caveat": "measures description discriminability, not agent behaviour; argument accuracy requires an LLM run (not done)"
+}

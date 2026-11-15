@@ -45,7 +45,22 @@ Stores: SQLite checkpointer (Postgres supported, untested), app DB, LangGraph st
 | Injection | paraphrased instructions evade the regex (detected 2/10) | none; approval gate limits damage | no |
 | Mispriced | 20% of bids outside the market p25–p75 band | not fixed | – |
 | Tool error / degraded | marketplace down | queue + banner + redrive (tested) | yes |
-(Only 10 classes of the required ≥ 10 <em>failed dev jobs</em> are described at the incident level; add 10 concrete failed job ids from <code>evals/results</code> traces before submitting.)</p>
+<strong>Concrete failed dev jobs</strong> (<code>evals/runners/failed_jobs.py</code> → <code>failed_jobs.json</code>; 120 dev jobs examined, 48 failures: <strong>26 wrong skip, 11 wrong bid, 11 mispriced, 0 missed evidence</strong>). Open any id in the app (Analyse → Run → trace):
+| # | Class | Job id | Title | What happened | Cause / fix tried |
+|---|---|---|---|---|---|
+| 1 | wrong skip | job-2759dad0f4 | Mini-Leads AI chat driven CRM | fit 0.40 → "watch" (gold: bid) | fit threshold 0.45 vs noisy lexical strength; not fixed |
+| 2 | wrong skip | job-1327e7c354 | Network Engineer - OPENAI API/ChatGPT Payment Problem | fit 0.39 → watch | keyword-extracted skills ("openai") overstate relevance in gold; label noise |
+| 3 | wrong skip | job-0c90cb12c0 | Android Studio Developer needed for prototype App | fit 0.23 → skip (gold overlap 1.0) | gold skill tag is a false positive on a mobile job; label noise |
+| 4 | wrong skip | job-726f549d7c | AI Developer | budget 25 below floor 30 → skip although fit 0.89 | floor rule (config <code>pricing.floor_hourly_multiplier</code>) is stricter than the gold rule |
+| 5 | wrong bid | job-197c1802cc | AI Model/Tool Developer for Building Damage Assessment | bid at fit 0.56, 4/6 requirements evidenced (gold: skip, budget rule) | gold excludes on budget, graph accepts a wide band |
+| 6 | wrong bid | job-3d96bed306 | AI Machine Learning Developer - LLM AI Lead Gen | bid, fit 0.75 | same as 5 |
+| 7 | wrong bid | job-68ba2b3d24 | Write Unity gaming app relying on ChatGPT API | bid, fit 1.0 from a single requirement ("1/1") | one-requirement jobs saturate fit; needs a minimum-requirements rule |
+| 8 | wrong bid | job-4d4ab39b12 | Create image and data repository | bid at fit 0.50 (3/6 evidenced) | threshold 0.45 admits half-matched jobs |
+| 9 | mispriced | job-655d2fa215 | JavaScript Web Scraper | bid 25.5 vs band 10–24 | the persona's hourly floor (30 × 0.85) exceeds the market p75, so the floor overrides the band by design |
+| 10 | mispriced | job-c4fc134f56 | Javascript - Adjustment in Wordpress Using Divi Theme | bid 25.5 vs band 11.11–25 | same |
+| 11 | mispriced | job-3e89326a4d | Next.js &amp; Babylon.js Expert For House Configurator | bid 25.5 vs band 11.11–25 | same |
+| 12 | mispriced | job-9ae1585805 | Basic Meat &amp; Potatoes SEO and Google Shopping Work on Shopify Store | bid 25.5 vs band 10–25 | same |
+Take-away: most "failures" are label noise or a deliberate floor rule, not agent errors; the real defect is #7 (single-requirement saturation), not yet fixed.</p>
 <h2>9. Safety and platform respect</h2>
 <p>Enforced: untrusted text delimited/scanned/neutralised; nothing sent without an approval interrupt (auto-submitted jobs: 0 in every eval); unsupported claims removed; contact details/guarantees/off-platform asks stripped; PII masked in logs, traces and the audit log; OAuth tokens Fernet-encrypted; every query tenant-scoped; no scraping/browser automation/cookies.
 Injection results (Appendix A): the Risk Assessor flags 100% of the planted injections with defences on (0% off); the payload never reached the text to be sent in either mode because the offline writer is extractive, so this does <strong>not</strong> show the defence preventing harm. <strong>An attack that beats it:</strong> paraphrased instructions (2/10 detected). With an LLM writer that risk is real; the approval gate is the backstop. Upwork: live mode not exercised.</p>

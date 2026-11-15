@@ -1,0 +1,20 @@
+{
+  "n": 30,
+  "weighted_kappa": 0.6396,
+  "exact_agreement": 0.5,
+  "within_one": 0.9,
+  "biggest_disagreements": [
+    {
+      "item": "2",
+      "human": 4,
+      "judge": 2,
+      "text": "Your post for \"Build a Bubble Web App.\" caught my attention. I can deliver a first milestone for build a bubble web app. and share progress with you before we go further. To keep it concrete, I would "
+    },
+    {
+      "item": "16",
+      "human": 3,
+      "judge": 5,
+      "text": "Your post for \"AI Specialist for Health Prediction Model Development\" caught my attention. On a past project, churn prediction pipeline for a SaaS client. Compared logistic regression and gradient boo"
+    }
+  ]
+}

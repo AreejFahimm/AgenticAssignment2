@@ -1,0 +1,15 @@
+done ai_ml_engineer
+done fullstack_web_dev
+done data_analyst
+V0 baseline                          R@5=0.357 MRR=0.527 nDCG=0.413 n=112
+best (decompose+hybrid+rerank)       R@5=0.359 MRR=0.485 nDCG=0.408 n=112
+best + contextual indexing (V6)      R@5=0.377 MRR=0.502 nDCG=0.447 n=112
+best + outcome boost                 R@5=0.356 MRR=0.473 nDCG=0.397 n=112
+best - decompose                     R@5=0.331 MRR=0.438 nDCG=0.378 n=112
+best - hybrid                        R@5=0.346 MRR=0.486 nDCG=0.393 n=112
+best - rerank                        R@5=0.414 MRR=0.600 nDCG=0.465 n=112
+best, rerank pool 10 (latency opt.)  R@5=0.383 MRR=0.516 nDCG=0.454 n=112
+contextual dense only (V6 dense)     R@5=0.372 MRR=0.497 nDCG=0.424 n=112
+decompose+hybrid+contextual, no rerank R@5=0.511 MRR=0.633 nDCG=0.575 n=112
+decompose+hybrid, no rerank          R@5=0.414 MRR=0.600 nDCG=0.465 n=112
+hybrid+contextual, no rerank         R@5=0.287 MRR=0.404 nDCG=0.365 n=112

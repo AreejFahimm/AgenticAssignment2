@@ -1,0 +1,222 @@
+{
+  "counts": {
+    "wrong_skip": 26,
+    "wrong_bid": 11,
+    "mispriced": 11
+  },
+  "examples": [
+    {
+      "cls": "wrong_skip",
+      "persona": "ai_ml_engineer",
+      "job_id": "job-2759dad0f4",
+      "title": "Mini-Leads AI chat driven CRM",
+      "decision": "watch",
+      "reasons": [
+        "fit 0.40 in watch band"
+      ],
+      "fit": 0.4,
+      "skill_overlap": 0.67,
+      "bid": null,
+      "band": [
+        100.0,
+        900.0
+      ]
+    },
+    {
+      "cls": "wrong_skip",
+      "persona": "ai_ml_engineer",
+      "job_id": "job-1327e7c354",
+      "title": "Network Engineer - OPENAI API/ChatGPT Payment Problem",
+      "decision": "watch",
+      "reasons": [
+        "fit 0.39 in watch band"
+      ],
+      "fit": 0.393,
+      "skill_overlap": 0.67,
+      "bid": null,
+      "band": [
+        13.0,
+        25.0
+      ]
+    },
+    {
+      "cls": "wrong_skip",
+      "persona": "ai_ml_engineer",
+      "job_id": "job-0c90cb12c0",
+      "title": "Android Studio Developer needed for prototype App",
+      "decision": "skip",
+      "reasons": [
+        "fit 0.23 below 0.3"
+      ],
+      "fit": 0.235,
+      "skill_overlap": 1.0,
+      "bid": null,
+      "band": [
+        17.0,
+        50.0
+      ]
+    },
+    {
+      "cls": "wrong_skip",
+      "persona": "ai_ml_engineer",
+      "job_id": "job-726f549d7c",
+      "title": "AI Developer",
+      "decision": "skip",
+      "reasons": [
+        "budget 25.0 below floor 30"
+      ],
+      "fit": 0.893,
+      "skill_overlap": 1.0,
+      "bid": null,
+      "band": [
+        15.0,
+        40.0
+      ]
+    },
+    {
+      "cls": "wrong_bid",
+      "persona": "ai_ml_engineer",
+      "job_id": "job-197c1802cc",
+      "title": "AI Model/Tool Developer for Building Damage Assessment",
+      "decision": "bid",
+      "reasons": [
+        "fit 0.56, risk 0.28",
+        "4/6 requirements have evidence"
+      ],
+      "fit": 0.561,
+      "skill_overlap": 1.0,
+      "bid": 475.0,
+      "band": [
+        70.0,
+        1000.0
+      ]
+    },
+    {
+      "cls": "wrong_bid",
+      "persona": "ai_ml_engineer",
+      "job_id": "job-3d96bed306",
+      "title": "AI Machine Learning Developer - LLM AI Lead Gen",
+      "decision": "bid",
+      "reasons": [
+        "fit 0.75, risk 0.27",
+        "5/6 requirements have evidence"
+      ],
+      "fit": 0.75,
+      "skill_overlap": 0.88,
+      "bid": 466.0,
+      "band": [
+        100.0,
+        900.0
+      ]
+    },
+    {
+      "cls": "wrong_bid",
+      "persona": "ai_ml_engineer",
+      "job_id": "job-68ba2b3d24",
+      "title": "Write Unity gaming app relying on ChatGPT API",
+      "decision": "bid",
+      "reasons": [
+        "fit 1.00, risk 0.32",
+        "1/1 requirements have evidence"
+      ],
+      "fit": 1.0,
+      "skill_overlap": 1.0,
+      "bid": 600.0,
+      "band": [
+        65.0,
+        600.0
+      ]
+    },
+    {
+      "cls": "wrong_bid",
+      "persona": "fullstack_web_dev",
+      "job_id": "job-4d4ab39b12",
+      "title": "Create image and data repository",
+      "decision": "bid",
+      "reasons": [
+        "fit 0.50, risk 0.26",
+        "3/6 requirements have evidence"
+      ],
+      "fit": 0.5,
+      "skill_overlap": 0.6,
+      "bid": 250.0,
+      "band": [
+        40.0,
+        374.4
+      ]
+    },
+    {
+      "cls": "mispriced",
+      "persona": "fullstack_web_dev",
+      "job_id": "job-655d2fa215",
+      "title": "JavaScript Web Scraper",
+      "decision": "bid",
+      "reasons": [
+        "fit 0.45, risk 0.07",
+        "4/6 requirements have evidence"
+      ],
+      "fit": 0.45,
+      "skill_overlap": 0.67,
+      "bid": 25.5,
+      "band": [
+        10.0,
+        24.0
+      ]
+    },
+    {
+      "cls": "mispriced",
+      "persona": "fullstack_web_dev",
+      "job_id": "job-c4fc134f56",
+      "title": "Javascript - Adjustment in Wordpress Using Divi Theme",
+      "decision": "bid",
+      "reasons": [
+        "fit 0.65, risk 0.13",
+        "5/6 requirements have evidence"
+      ],
+      "fit": 0.652,
+      "skill_overlap": 1.0,
+      "bid": 25.5,
+      "band": [
+        11.11,
+        25.0
+      ]
+    },
+    {
+      "cls": "mispriced",
+      "persona": "fullstack_web_dev",
+      "job_id": "job-3e89326a4d",
+      "title": "Next.js & Babylon.js Expert For House Configurator",
+      "decision": "bid",
+      "reasons": [
+        "fit 0.83, risk 0.01",
+        "5/6 requirements have evidence"
+      ],
+      "fit": 0.833,
+      "skill_overlap": 1.0,
+      "bid": 25.5,
+      "band": [
+        11.11,
+        25.0
+      ]
+    },
+    {
+      "cls": "mispriced",
+      "persona": "fullstack_web_dev",
+      "job_id": "job-9ae1585805",
+      "title": "Basic Meat & Potatoes SEO and Google Shopping Work on Shopify Store",
+      "decision": "bid",
+      "reasons": [
+        "fit 0.68, risk 0.07",
+        "2/2 requirements have evidence"
+      ],
+      "fit": 0.675,
+      "skill_overlap": 1.0,
+      "bid": 25.5,
+      "band": [
+        10.0,
+        25.0
+      ]
+    }
+  ],
+  "jobs_examined": 120
+}

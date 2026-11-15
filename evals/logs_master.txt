@@ -1,0 +1,11 @@
+== rag_eval2 08:38:16
+== latency 08:56:16
+== decisions 08:59:05
+== verify 09:04:38
+== outcomes 09:06:29
+FAILED: outcomes
+== ab 09:06:34
+== tools 09:09:29
+== compare 09:09:34
+== ablation 09:16:33
+ALL DONE 09:32:05

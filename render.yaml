@@ -1,0 +1,23 @@
+# Render Blueprint: one Docker web service (API + built React app + in-process GigSim). Offline profile = no LLM key needed.
+services:
+  - type: web
+    name: gigbid
+    runtime: docker
+    dockerfilePath: ./infra/docker/Dockerfile
+    dockerContext: .
+    plan: starter            # embedding model needs >512 MB; free tier will likely OOM
+    healthCheckPath: /health
+    disk: { name: gigbid-data, mountPath: /data, sizeGB: 1 }
+    envVars:
+      - { key: PORT, value: "8000" }
+      - { key: MODEL_PROFILE, value: offline }
+      - { key: GIGSIM_INPROCESS, value: "1" }
+      - { key: GIGSIM_ERROR_RATE, value: "0.02" }
+      - { key: CHECKPOINT_DB, value: /data/checkpoints.sqlite }
+      - { key: APP_DB, value: /data/app.sqlite }
+      - { key: MEMORY_DB, value: /data/memory.sqlite }
+      - { key: REVIEWER_EMAIL, value: reviewer@gigbid.demo }
+      - { key: REVIEWER_PERSONA, value: ai_ml_engineer }
+      - { key: APP_SECRET_KEY, generateValue: true }
+      - { key: REVIEWER_PASSWORD, sync: false }   # you type this in the Render dashboard
+      - { key: TOKEN_ENC_KEY, sync: false }       # python -c "from cryptography.fernet import Fernet;print(Fernet.generate_key().decode())"

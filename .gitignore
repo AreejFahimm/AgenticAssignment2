@@ -9,7 +9,14 @@ node_modules/
 .next/
 dist/
 build/
-data/processed/
+data/processed/*
+!data/processed/jobs.jsonl
+!data/processed/job_stream.jsonl
+!data/processed/price_stats.json
+!data/processed/index/
 data/raw/
 .kaggle/
 kaggle.json
+
+apps/web/playwright-report/
+apps/web/test-results/
